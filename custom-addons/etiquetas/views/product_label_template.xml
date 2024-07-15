@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Plantilla del reporte de etiquetas heredada -->
+        <template id="report_product_label_document"
+            inherit_id="product.report_producttemplatelabel">
+            <xpath expr="//div[@class='page']" position="inside">
+                <!-- Agregar información adicional, como el peso -->
+                <p t-if="doc.weight"><t t-esc="doc.weight" /></p>
+                <p> Super Akí </p>
+            </xpath>
+
+        </template>
+
+    </data>
+</odoo>
