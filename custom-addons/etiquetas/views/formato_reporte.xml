@@ -2,7 +2,7 @@
 <odoo>
     <data>
         <template id="report_product_label_no_barcode" inherit_id="product.report_producttemplatelabel_dymo">
-            <xpath expr="//div[@class='page']" position="replace">
+            <xpath expr="//div[@class='page']" position="inside">
                 <div class="page">
                     <t t-call="etiquetas.report_productlabel_no_barcode">
                         <t t-set="products" t-value="products"/>

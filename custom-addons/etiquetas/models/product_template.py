@@ -36,10 +36,17 @@ class ProductLayout(models.TransientModel):
                 if not report_action:
                     raise UserError(_("No se pudo encontrar el reporte con el ID: %s" % xml_id))
 
-                products = self.env['product.template'].browse(self._context.get('active_ids', []))
+                products = self.env['product.template'].browse
+                (self._context.get('active_ids', []))
                 if not products:
                     raise UserError(_("No se encontraron productos para generar el reporte."))
 
-                return report_action.report_action(products)
+                # Añadir el contexto necesario para el template
+                context = {
+                    'products': products,
+                    'quantity': {product.id: 10 for product in products}  # Ejemplo de diccionario quantity
+                }
+
+                return report_action.with_context(context).report_action(products)
             except Exception as e:
                 raise UserError(_("Error al intentar generar el reporte: %s" % str(e)))
