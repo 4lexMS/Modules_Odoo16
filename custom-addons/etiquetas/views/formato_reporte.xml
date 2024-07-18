@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_product_label_no_barcode" inherit_id="product.report_producttemplatelabel_dymo">
+            <xpath expr="//div[@class='page']" position="replace">
+                <div class="page">
+                    <t t-call="etiquetas.report_productlabel_no_barcode">
+                        <t t-set="products" t-value="products"/>
+                    </t>
+                </div>
+            </xpath>
+        </template>
+    </data>
+</odoo>

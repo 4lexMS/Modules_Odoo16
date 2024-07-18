@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Heredar y personalizar la vista impresion etiqueta -->
+        <record id="view_product_label_layout_form" model="ir.ui.view">
+            <field name="name">product_label_layout_form.inherit</field>
+            <field name="model">product.label.layout</field>
+            <field name="inherit_id" ref="product.product_label_layout_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='print_format']" position="attributes">
+                    <attribute name="selection">[('dymo',
+                        'Report Demo'), ('2x7xprice', '2 x 7 with price'), ('4x7xprice', '4 x 7 with
+                        price'), ('4x12', '4 x 12'), ('4x12xprice', '4 x 12 with price')]</attribute>
+                </xpath>
+
+                <field name="extra_html" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+
+            </field>
+        </record>
+    </data>
+</odoo>
