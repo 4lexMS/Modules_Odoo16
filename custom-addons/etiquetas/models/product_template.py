@@ -27,11 +27,19 @@ class ProductLayout(models.TransientModel):
             if record.print_format == 'report_cris':
                 xml_id = 'etiquetas.action_report_product_label_no_barcode'
             else:
-                xml_id = ''
-            if xml_id:
+                # Llamar al método original
+                return super(ProductLayout, self).process()
+
+            # Procesar el reporte cuando es 'report_cris'
+            try:
                 report_action = self.env.ref(xml_id)
                 if not report_action:
-                    raise UserError(_("No se pudo encontrar el reporteee con el ID: %s" % xml_id))
-                return report_action.report_action(self)
-            else:
-                return super(ProductLayout, self).process()
+                    raise UserError(_("No se pudo encontrar el reporte con el ID: %s" % xml_id))
+
+                products = self.env['product.template'].browse(self._context.get('active_ids', []))
+                if not products:
+                    raise UserError(_("No se encontraron productos para generar el reporte."))
+
+                return report_action.report_action(products)
+            except Exception as e:
+                raise UserError(_("Error al intentar generar el reporte: %s" % str(e)))
