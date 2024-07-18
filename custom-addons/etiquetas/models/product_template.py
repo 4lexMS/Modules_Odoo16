@@ -1,13 +1,8 @@
-# my_custom_module/models/product_template.py
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
-
-    name = fields.Char(string='Name', required=True)
-    default_code = fields.Char(string='Internal Reference')
-    list_price = fields.Float(string='Sales Price', default=1.0)
 
 class ProductLayout(models.TransientModel):
     _inherit = 'product.label.layout'
@@ -19,34 +14,44 @@ class ProductLayout(models.TransientModel):
         ('2x7xprice', '2 x 7 with price'),
         ('4x7xprice', '4 x 7 with price'),
         ('4x12', '4 x 12'),
-        ('4x12xprice', '4 x 12 with price'),
-    ], string="Format", default='dymo', required=True)
+        ('4x12xprice', '4 x 12 with price')], string="Format", default='2x7xprice', required=True)
 
-    def process(self):
-        for record in self:
-            if record.print_format == 'report_cris':
-                xml_id = 'etiquetas.action_report_product_label_no_barcode'
-            else:
-                # Llamar al método original
-                return super(ProductLayout, self).process()
+    custom_quantity = fields.Integer('Quantity', default=1, required=True)
 
-            # Procesar el reporte cuando es 'report_cris'
-            try:
-                report_action = self.env.ref(xml_id)
-                if not report_action:
-                    raise UserError(_("No se pudo encontrar el reporte con el ID: %s" % xml_id))
+    def _prepare_report_data(self):
 
-                products = self.env['product.template'].browse
-                (self._context.get('active_ids', []))
-                if not products:
-                    raise UserError(_("No se encontraron productos para generar el reporte."))
+        if self.custom_quantity <= 0:
+            raise UserError(_('You need to set a positive quantity.'))
 
-                # Añadir el contexto necesario para el template
-                context = {
-                    'products': products,
-                    'quantity': {product.id: 10 for product in products}  # Ejemplo de diccionario quantity
-                }
+        xml_id, data = super()._prepare_report_data()
 
-                return report_action.with_context(context).report_action(products)
-            except Exception as e:
-                raise UserError(_("Error al intentar generar el reporte: %s" % str(e)))
+        if 'report_cris' in self.print_format:
+            xml_id = 'etiquetas.action_product_simple_label'
+
+        products = []
+        active_model = 'product.template'
+        if self.product_tmpl_ids:
+            products = self.product_tmpl_ids
+        elif self.product_ids:
+            products = self.product_ids
+            active_model = 'product.product'
+        else:
+            raise UserError(_("No product to print, if the product is archived please unarchive it before printing its label."))
+
+        quantity_by_product = {p.id: self.custom_quantity for p in products}
+
+        updated_data = {
+            'active_model': active_model,
+            'quantity_by_product': quantity_by_product,
+            'layout_wizard': self.id,
+            'products': products,
+            'price_included': 'xprice' in self.print_format,
+        }
+
+        if isinstance(data, tuple):
+            data = data[1]  # Si data es un tuple, tomamos solo el segundo elemento
+
+        data.update(updated_data)
+        data['quantity'] = updated_data['quantity_by_product']  # Asegurarse de que 'quantity' esté en los datos
+
+        return xml_id, data

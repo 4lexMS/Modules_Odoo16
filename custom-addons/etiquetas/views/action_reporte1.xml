@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-
-        <!-- Definición de la acción del reporte -->
-        <record id="action_report_product_label_no_barcode" model="ir.actions.report">
+        <record id="action_product_simple_label" model="ir.actions.report">
             <field name="name">Product Label No Barcode</field>
             <field name="model">product.template</field>
-            <field name="report_name">etiquetas.report_product_label_no_barcode</field>
-            <field name="report_file">etiquetas.report_product_label_no_barcode</field>
+            <field name="report_name">etiquetas.report_producttemplatelabel_cris</field>
+            <field name="report_file">etiquetas.report_producttemplatelabel_cris</field>
             <field name="report_type">qweb-pdf</field>
             <field name="paperformat_id" ref="product.paperformat_label_sheet_dymo"/>
             <field name="print_report_name">'Products Labels - %s' % (object.name)</field>
             <field name="binding_type">report</field>
         </record>
-    
+
         <record id="paperformat_label_sheet_dymo" model="report.paperformat">
             <field name="name">Dymo Label Sheet</field>
             <field name="default" eval="True" />
@@ -28,8 +26,5 @@
             <field name="disable_shrinking" eval="True" />
             <field name="dpi">96</field>
         </record>
-
     </data>
-    
-
 </odoo>
