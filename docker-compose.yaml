@@ -2,6 +2,8 @@ version: '3.1'
 services:
   web:
     image: odoo:16.0
+    command: odoo --dev=all
+
     depends_on:
       - db
     ports:
