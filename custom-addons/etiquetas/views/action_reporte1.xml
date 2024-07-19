@@ -4,9 +4,9 @@
         <record id="action_product_simple_label" model="ir.actions.report">
             <field name="name">Product Label No Barcode</field>
             <field name="model">product.template</field>
+            <field name="report_type">qweb-pdf</field>
             <field name="report_name">etiquetas.report_producttemplatelabel_cris</field>
             <field name="report_file">etiquetas.report_producttemplatelabel_cris</field>
-            <field name="report_type">qweb-pdf</field>
             <field name="paperformat_id" ref="product.paperformat_label_sheet_dymo"/>
             <field name="print_report_name">'Products Labels - %s' % (object.name)</field>
             <field name="binding_type">report</field>
