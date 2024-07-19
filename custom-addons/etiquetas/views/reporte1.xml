@@ -21,7 +21,7 @@
                     <t t-foreach="range(quantity[product.id])" t-as="qty">
                         <t t-set="barcode" t-value="barcode_and_qty[0]"/>
                         <t t-foreach="range(barcode_and_qty[1])" t-as="qty">
-                            <t t-call="product.report_simple_label_c"/>
+                            <t t-call="etiquetas.report_simple_label_c"/>
                         </t>
                     </t>
                 </t>
