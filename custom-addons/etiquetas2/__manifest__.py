@@ -8,7 +8,7 @@
     'license': 'LGPL-3',
     'depends': ['base', 'product',],
     'data': [
-        'views1/etiqueta_form.xml',
+        'views1/reportePrueba.xml',
         'views1/product_form_views.xml',
         'security1/ir.model.access.csv',
     ],
