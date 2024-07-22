@@ -41,12 +41,12 @@ class ProductLabelLayout(models.TransientModel):
         else:
             xml_id = ''
 
-        active_model = ''
+        # Convert product IDs to recordsets
         if self.product_tmpl_ids:
-            products = self.product_tmpl_ids.ids
+            products = self.product_tmpl_ids.product_variant_ids
             active_model = 'product.template'
         elif self.product_ids:
-            products = self.product_ids.ids
+            products = self.product_ids
             active_model = 'product.product'
         else:
             raise UserError(_("No product to print, if the product is archived please unarchive it before printing its label."))
@@ -54,8 +54,18 @@ class ProductLabelLayout(models.TransientModel):
         # Build data to pass to the report
         data = {
             'active_model': active_model,
-            'quantity_by_product': {p: self.custom_quantity for p in products},
+            'products': products,  # Use the recordset directly
+            'quantity_by_product': {p.id: self.custom_quantity for p in products if hasattr(p, 'id')},
             'layout_wizard': self.id,
             'price_included': 'xprice' in self.print_format,
         }
         return xml_id, data
+
+    def process(self):
+        self.ensure_one()
+        xml_id, data = self._prepare_report_data()
+        if not xml_id:
+            raise UserError(_('Unable to find report template for %s format', self.print_format))
+        report_action = self.env.ref(xml_id).report_action(self, data=data)  # Pass self as record to report_action
+        report_action.update({'close_on_report_download': True})
+        return report_action

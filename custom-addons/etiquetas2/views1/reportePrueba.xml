@@ -4,26 +4,26 @@
             <div>
                 <h2>Test Report</h2>
                 <p>This is a test report to check if the template is working.</p>
-                <p>Docs Length: <t t-esc="products"/></p>
-
+                <p t-if="products">
+                    Docs Length: <t t-esc="len(products)"/> <!-- Corrected to use length of products -->
+                </p>
+                <p t-if="not products">
+                    No products found.
+                </p>
             </div>
-            <t t-foreach="products" t-as="products">
-                <!-- Tu diseño para el reporte CRIS aquí -->
+            <t t-foreach="products" t-as="product">
                 <div>
                     <h2>Product Label - CRIS</h2>
-                    <p>Name: <t t-esc="products.name" /></p>
-                    <p>Code: <t t-esc="products.default_code" /></p>
-                    <p>Price: <t t-esc="products.list_price" /></p>
+                    <p>Code: <t t-esc="product.default_code" /></p>
+                    <p>Price: <t t-esc="product.list_price" /></p>
                 </div>
-
-
             </t>
         </t>
     </template>
 
     <record id="report_product_label_cris" model="ir.actions.report">
         <field name="name">Product Label - CRIS</field>
-        <field name="model">product.product</field>
+        <field name="model">product.template</field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">etiquetas2.report_product_template_label_cris</field>
         <field name="report_file">etiquetas2.report_product_template_label_cris</field>
