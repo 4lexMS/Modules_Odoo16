@@ -4,38 +4,32 @@
         <template id="report_producttemplatelabel_cris">
             <t t-call="web.html_container">
                 <t t-set="barcode_size" t-value="'width:45.5mm;height:7.5mm'" />
-                <t t-set="table_style" t-value="'width:100%;height:32mm;'" />
-                <t t-set="padding_page" t-value="'padding: 2mm'" />
-                <div class="page">
+                <t t-set="table_style" t-value="'width:100%;height:32mm;margin:0;padding:0;'" />
+                <t t-set="padding_page" t-value="'padding: 0; margin: 0;'" />
+                <div class="page" style="font-family: 'DejaVu Sans', sans-serif; margin: 0; padding: 0;">
                     <t t-foreach="quantity.items()" t-as="barcode_and_qty_by_product">
                         <t t-set="product" t-value="barcode_and_qty_by_product[0]" />
                         <t t-foreach="barcode_and_qty_by_product[1]" t-as="info">
                             <t t-foreach="range(0, info['quantity'])" t-as="i">
                                 <div class="o_label_sheet o_label_dymo" t-att-style="padding_page">
-                                    <div class="o_label_full" t-att-style="table_style">
-
-                                        <div class="o_label_name"
-                                            style="line-height: 100%;background-color: transparent;padding-top: 2px;">
-                                            <span t-if="product.is_product_variant"
-                                                t-field="product.display_name" />
-                                            <span t-else="" t-field="product.name" />
+                                    <div class="o_label_full" t-att-style="table_style + '; page-break-inside: avoid;'">
+                                        <div class="o_label_left_column" style="line-height: 100%; background-color: transparent; padding-top: 2px; font-weight: bold;">
+                                            <small class="text-nowrap" t-field="product.default_code" />
                                         </div>
-
-                                        <div class="o_label_left_column">
-                                            <small class="text-nowrap"
-                                                t-field="product.default_code" />
+                                        <div class="o_label_name" style="line-height: 100%; background-color: transparent; padding-top: 2px;">
+                                            <span t-if="product.is_product_variant" t-esc="product.display_name" />
+                                            <span t-else="" t-esc="product.name" />
                                         </div>
-
                                         <div class="text-end" style="padding: 0 4px;">
                                             <t t-if="product.is_product_variant">
-                                                <strong class="o_label_price_small"
-                                                    t-field="product.lst_price"
-                                                    t-options="{'widget': 'monetary', 'label_price': True}" />
+                                                <strong class="o_label_price_small">
+                                                    <t t-esc="'$ %.2f' % product[0]['lst_price']" />
+                                                </strong>
                                             </t>
                                             <t t-else="">
-                                                <strong class="o_label_price_small"
-                                                    t-field="product.list_price"
-                                                    t-options="{'widget': 'monetary', 'label_price': True}" />
+                                                <strong class="o_label_price_small">
+                                                    <t t-esc="'$ %.2f' % product[0]['list_price']" />
+                                                </strong>
                                             </t>
                                         </div>
                                     </div>

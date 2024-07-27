@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+# Part of Odoo. See LICENSE file for full copyright and licensing details.
+
 from odoo import models, fields, api
 from odoo.exceptions import UserError
 import logging
@@ -19,5 +22,5 @@ class ProductLayout(models.TransientModel):
         xml_id, data = super()._prepare_report_data()
 
         if 'report_cris' in self.print_format:
-            xml_id = 'css_macro_product_label.action_product_simple_label'
+            xml_id = 'css_macro_product_label.action_product_simple_cris'
         return xml_id, data

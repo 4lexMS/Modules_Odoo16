@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+<!-- Plantilla del informe -->
+<template id="report_productlabel">
+    <t t-call="web.html_container">
+        <t t-set="padding_page" t-value="'padding: 14mm 3mm'" />
+        <t t-set="columns" t-value="4"/> <!-- Definido el número de columnas -->
+        <t t-set="rows" t-value="7"/> <!-- Definido el número de filas -->
+
+        <t t-foreach="quantity.items()" t-as="barcode_and_qty_by_product">
+            <t t-set="product" t-value="barcode_and_qty_by_product[0]" />
+            <t t-foreach="barcode_and_qty_by_product[1]" t-as="info">
+                <t t-foreach="range(0, info['quantity'])" t-as="i">
+                    <div class="o_label_sheet" t-att-style="padding_page">
+                        <table class="my-0 table table-sm table-borderless">
+                            <t t-if="columns and rows">
+                                <t t-foreach="range(rows)" t-as="row">
+                                    <tr>
+                                        <t t-foreach="range(columns)" t-as="column">
+                                            <t t-if="not current_quantity and quantity and not (current_data and current_data[1])">
+                                                <t t-set="current_data" t-value="quantity.popitem()" />
+                                                <t t-set="product" t-value="current_data[0]" />
+                                                <t t-set="barcode_and_qty" t-value="current_data[1].pop()" />
+                                                <t t-set="barcode" t-value="barcode_and_qty[0]" />
+                                                <t t-set="current_quantity" t-value="barcode_and_qty[1]" />
+                                            </t>
+                                            <t t-if="current_quantity">
+                                                <t t-set="make_invisible" t-value="False" />
+                                                <t t-set="current_quantity" t-value="current_quantity - 1" />
+                                            </t>
+                                            <t t-elif="current_data and current_data[1]">
+                                                <t t-set="barcode_and_qty" t-value="current_data[1].pop()" />
+                                                <t t-set="barcode" t-value="barcode_and_qty[0]" />
+                                                <t t-set="current_quantity" t-value="barcode_and_qty[1] - 1" />
+                                            </t>
+                                            <t t-else="">
+                                                <t t-set="make_invisible" t-value="True" />
+                                            </t>
+                                            <t t-set="table_style" t-value="'border: 1px solid %s;' % (product.env.user.company_id.primary_color or 'black')" />
+
+                                            <!-- Subplantilla para los datos del reporte -->
+                                            <template id="report_simple_label4x7">
+                                                <t t-set="barcode_size" t-value="'width:33mm;height:8mm'" />
+                                                <t t-set="table_style" t-value="'width:47mm;height:37.1mm;' + table_style" />
+                                                <td t-att-style="make_invisible and 'visibility:hidden;'">
+                                                    <div class="o_label_full" t-att-style="table_style">
+                                                        <div class="o_label_left_column"
+                                                            style="line-height: 100%;background-color: transparent;padding-top: 2px; font-weight: bold;">
+                                                            <small class="text-nowrap" t-field="product.default_code" />
+                                                        </div>
+                                                        <div class="o_label_name">
+                                                            <strong t-field="product.display_name" />
+                                                        </div>
+                                                        <div class="text-end" style="padding-top:0;padding-bottom:0">
+                                                            <t t-if="product.is_product_variant">
+                                                                <strong class="o_label_price_medium">
+                                                                    <t t-esc="'$ %.2f' % (product.lst_price if product.lst_price is not None else 0.0)" />
+                                                                </strong>
+                                                            </t>
+                                                            <t t-else="">
+                                                                <strong class="o_label_price_medium">
+                                                                    <t t-esc="'$ %.2f' % (product.list_price if product.list_price is not None else 0.0)" />
+                                                                </strong>
+                                                            </t>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </template>
+                                            <t t-call="css_macro_product_label.report_simple_label4x7" />
+                                        </t>
+                                    </tr>
+                                </t>
+                            </t>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </t>
+</template>
+    </data>
+</odoo>

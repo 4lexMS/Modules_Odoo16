@@ -1,15 +1,16 @@
 # my_custom_module/__manifest__.py
 {
-    'name': 'Etiquetas del producto',
+    'name': 'Informe de punto de venta',
     'version': '1.0',
-    'summary': 'Personalizar etiquetas de productos',
+    'summary': 'Reportes de Puntos de ventas',
     'description': 'Este módulo personaliza las etiquetas de los productos.',
     'author': 'Alex',
     'license': 'LGPL-3',
-    'depends': ['base', 'stock',],
+    'depends': ['base', 'point_of_sale',],
     'data': [
-        'views/action_reporte1.xml',
-        'report/reporte1.xml',
+        'views/consolidacion_cajas.xml',
+        'views/egreso_caja.xml',
+        'security/ir.model.access.csv',
     ],
     'installable': True,
     'application': True,
