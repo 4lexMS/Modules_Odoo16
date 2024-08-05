@@ -32,20 +32,6 @@
             <field name="dpi">96</field>
         </record>
 
-        <!--
-        <record id="action_product_simple_label" model="ir.actions.report">
-            <field name="name">Product Label (PDF)</field>
-            <field name="model">product.template</field>
-            <field name="report_type">qweb-pdf</field>
-            <field name="report_name">css_macro_product_label.report_productlabel</field>
-            <field name="report_file">css_macro_product_label.report_productlabel</field>
-            <field name="paperformat_id" ref="product.paperformat_label_sheet"/>
-            <field name="print_report_name">'Products Labels - %s' % (object.name)</field>
-            <field name="binding_model_id" eval="False"/>
-            <field name="binding_type">report</field>
-        </record>
-    -->
-
         <!-- Define the report action -->
         <record id="action_product_simple_cris" model="ir.actions.report">
 

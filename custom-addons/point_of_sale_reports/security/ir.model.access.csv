@@ -1,3 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
- point_of_sale_reports.access_wizard_point_sale,access_wizard_point_sale,point_of_sale_reports.model_wizard_point_sale,base.group_user,1,1,1,1
+point_of_sale_reports.access_wizard_point_sale,access_wizard_point_sale,point_of_sale_reports.model_wizard_point_sale,base.group_user,1,1,1,1
+access_wizard_point_sale_line_manager,wizard.point_sale.line_manager,model_wizard_point_sale_line,base.group_user,1,1,1,1
+
+
 

@@ -1,0 +1,46 @@
+@font-face {
+    font-family: 'CustomFont';
+    src: url('/your_module_name/static/src/fonts/CustomFont.ttf') format('truetype');
+}
+
+body {
+    font-family: 'CustomFont', sans-serif;
+}
+
+table.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table.custom-table th,
+table.custom-table td {
+    border: none;
+    /* Quitar bordes internos */
+    padding: 8px;
+    text-align: left;
+}
+
+table.custom-table {
+    border: 2px solid black;
+    /* Borde externo grueso */
+}
+
+table.custom-table tr:first-child td,
+table.custom-table tr:first-child th,
+table.custom-table tr:last-child td,
+table.custom-table tr:last-child th {
+    border-top: 2px solid black;
+    /* Borde superior de la tabla */
+    border-bottom: 2px solid black;
+    /* Borde inferior de la tabla */
+}
+
+table.custom-table tr td:first-child,
+table.custom-table tr th:first-child,
+table.custom-table tr td:last-child,
+table.custom-table tr th:last-child {
+    border-left: 2px solid black;
+    /* Borde izquierdo de la tabla */
+    border-right: 2px solid black;
+    /* Borde derecho de la tabla */
+}

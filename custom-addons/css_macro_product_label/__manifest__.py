@@ -6,7 +6,7 @@
     'description': 'Este módulo personaliza las etiquetas de los productos.',
     'author': 'Alex',
     'license': 'LGPL-3',
-    'depends': ['base', 'stock',],
+    'depends': ['base', 'stock', 'product'],
     'data': [
         'views/action_reporte1.xml',
         'report/reporte1.xml',

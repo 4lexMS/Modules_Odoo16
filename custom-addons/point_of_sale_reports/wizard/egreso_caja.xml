@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="wizard_egreso_caja" model="ir.ui.view">
+            <field name="name">wizard.point_sale</field>
+            <field name="model">wizard.point_sale</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="usuario" readonly="1"/>
+                            <field name="fecha"/>
+                        </group>
+                        <group>
+                            <field name="caja"/>
+                            <field name="sesion_caja"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button string="Discard" class="btn-secondary" special="cancel"/>
+                        <button string="Generar Reporte" type="object" name="generate_report_egreso" class="btn-primary"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_menu_egreso_caja" model="ir.actions.act_window">
+            <field name="name">Reporte Egreso o Ingreso de Caja</field>
+            <field name="res_model">wizard.point_sale</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_egreso_caja"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem
+            id="menu_egreso_caja"
+            name="Egreso de Caja"
+            parent="point_of_sale.menu_point_rep"
+            action="action_menu_egreso_caja"/>
+    </data>
+</odoo>

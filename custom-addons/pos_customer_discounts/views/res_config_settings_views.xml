@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--Inherit form view of res.config.settings-->
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">
+            res.config.settings.view.form.inherit.pos.customer.discounts
+        </field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id"
+               ref="point_of_sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='pos_pricing_section']" position="inside">
+                <div class="col-12 col-lg-6 o_setting_box" id="pos_customers_discount">
+                    <div class="o_setting_left_pane">
+                        <field name="customer_discounts"/>
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label for="customer_discounts" string="Descuentos para clientes VIP"/>
+                        <div class="text-muted">
+                            Proporciona descuento adicional para los clientes VIP
+                        </div>
+                        <div class="content-group" attrs="{'invisible': [('customer_discounts' ,'=', False)]}">
+                            <div class="row mt16">
+                                <label for="discount_birthday" class="col-lg-3 o_light_label"/>
+                                <field name="discount_birthday" widget="percentage" />
+                            </div>
+                            <div class="row mt16">
+                                <label for="discount_card_payment" class="col-lg-3 o_light_label"/>
+                                <field name="discount_card_payment" widget="percentage" />
+                            </div>
+                            <div class="row mt16">
+                                <label for="discount_cash_payment" class="col-lg-3 o_light_label"/>
+                                <field name="discount_cash_payment" widget="percentage" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_egreso_cajas">
+        <t t-call="web.basic_layout">
+            <t t-foreach="docs" t-as="doc">
+                <div class="page">
+                    <style>
+                        table.custom-table1 {
+                        width: 50%;
+                        text-align: left;
+                        border-bottom: 2px solid;
+                        font-size: 12px;
+                        font-family: Arial;
+                        }
+                        table.custom-table-totales {
+                        width: 35%;
+                        text-align: right;
+                        font-size: 13px;
+                        font-weight: bold;
+                        font-family: Calibri;
+                        margin-left: 140px;
+                        border-radius: 10px;
+                        border: 2px solid;
+                        padding: 10px;
+                        }
+
+                        table.custom-table-billetes {
+                        width: 35%;
+                        text-align: right;
+                        font-size: 12px;
+                        font-weight: bold;
+                        font-family: Calibri;
+                        margin-left: 350px;
+                        margin-top: -75px;
+                        padding: 10px;
+                        border-collapse: collapse;
+                        border: none;
+                        }
+
+                        table.custom-table {
+                        width: 95%;
+                        font-size: 13px;
+                        margin-top: 10px;
+                        margin-left: 35px;
+                        border-radius: 10px;
+                        border: none;
+                        padding: 5px;
+                        }
+
+                        table.custom-table_title1 {
+                        width: 95%;
+                        font-size: 13px;
+                        font-weight: bold;
+                        margin-top: 10px;
+                        margin-left: 35px;
+                        border-radius: 10px;
+                        border: none;
+                        padding: 5px;
+                        }
+                        table.custom-table_title2 {
+                        width: 95%;
+                        font-size: 13px;
+                        font-weight: bold;
+                        margin-top: 10px;
+                        margin-left: 35px;
+                        border-radius: 10px;
+                        border: none;
+                        padding: 5px;
+                        }
+
+                        table.custom-table_title {
+                        width: 95%;
+                        font-size: 18px;
+                        margin-top: 70px;
+                        margin-left: 35px;
+                        border-radius: 10px;
+                        border: none;
+                        font-weight: bold;
+                        }
+
+                        table.custom-table2 {
+                        width: 90%;
+                        font-weight: bold;
+                        font-size: 10px;
+                        margin-top: 20px;
+                        margin: auto;
+                        padding: 0px;
+                        border: 1px solid #000000;
+                        color: #FFFFFF;
+                        background-color: #999291;
+                        }
+
+                        p.parrafo_title1{
+                        text-align: left;
+                        font-size: 12px;
+                        font-family: Calibri;
+                        padding-left: 35px;
+                        position: relative;
+                        top:60px;
+                        }
+
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        text-align: center;
+                        font-size: 10px;
+                        color: #000000;
+                        }
+                        .footer .left {
+                        float: left;
+                        margin-left: 20px;
+                        }
+                        .footer .right {
+                        float: right;
+                        margin-right: 20px;
+                        }
+
+                    </style>
+                    <p class="parrafo_title1">
+                        <span style="text-transform: uppercase;" t-esc="doc.env.company.name" />
+                        <br></br>
+                        <span t-esc="doc.caja.name" />
+                        <br></br>
+                        <span t-esc="doc.env.company.street" />
+                    </p>
+
+                    <table class="custom-table_title">
+                        <tr>
+                            <td> EGRESO DE CAJA:</td>
+                            <td t-esc="doc.caja.name" />
+                            <td> Valor:</td>
+                            <td t-esc="doc.sesion_caja.name" />
+                        </tr>
+                    </table>
+
+                    <table class="custom-table">
+                        <tr>
+                            <td style="font-weight: bold;">Motivo:</td>
+                            <td t-esc="doc.caja.name" />
+                            <td></td>
+                            <td style="font-weight: bold;">Estado:</td>
+                            <td t-esc="doc.sesion_caja.name" />
+                        </tr>
+                        <tr></tr>
+                        <tr></tr>
+                        <tr>
+                            <td style="font-weight: bold;">Caja:</td>
+                            <td t-esc="doc.usuario" />
+                            <td></td>
+                            <td style="font-weight: bold;">Moneda:</td>
+                            <td t-esc="doc.fecha.strftime('%d/%m/%Y %H:%M:%S')" />
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold;">Fecha:</td>
+                            <td t-esc="doc.usuario" />
+                            <td></td>
+                            <td style="font-weight: bold;">Usuario:</td>
+                            <td t-esc="doc.fecha.strftime('%d/%m/%Y %H:%M:%S')" />
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold;">Referencia:</td>
+                            <td t-esc="doc.usuario" />
+                        </tr>
+                    </table>
+
+                    <table class="custom-table_title1">
+                        <tr>
+                            <td>FORMA DE PAGO:</td>
+                        </tr>
+                    </table>
+                    <table class="custom-table2">
+                        <tr>
+                            <td>FORMA DE PAGO</td>
+                            <td>BANCO</td>
+                            <td>Cta. CORRIENTE</td>
+                            <td>No CHEQUE</td>
+                            <td>VALOR</td>
+                        </tr>
+                    </table>
+
+                    <table class="custom-table">
+                        <tr>
+                            <td t-esc="doc.caja.name" />
+                            <td style="text-align: center;" t-esc="doc.sesion_caja.name" />
+                        </tr>
+
+                    </table>
+                    <table class="custom-table">
+                        <tr
+                            style="width: 20%;
+                        text-align: right
+                        border-top: 1px solid;">
+                            <td> Total: <t t-esc="doc.sesion_caja.name" /></td>
+                        </tr>
+                    </table>
+                    <table class="custom-table_title2">
+                        <tr>
+                            <td>CONTABILIZACION: CIC</td>
+                        </tr>
+                    </table>
+
+                    <table class="custom-table2">
+                        <tr>
+                            <td>CUENTA</td>
+                            <td>DESCRIPCION</td>
+                            <td>GLOSA</td>
+                            <td>DEBE</td>
+                            <td>HABER</td>
+                        </tr>
+                    </table>
+
+                    <table class="custom-table">
+                        <tr>
+                            <td t-esc="doc.caja.name" />
+                            <td style="text-align: center;" t-esc="doc.sesion_caja.name" />
+                        </tr>
+
+                    </table>
+                    <table class="custom-table">
+                        <tr
+                            style="width: 20%;
+                        text-align: right
+                        border-top: 1px solid;">
+                            <td> Total: <t t-esc="doc.sesion_caja.name" /></td>
+                            <td t-esc="doc.sesion_caja.name" />
+                        </tr>
+                    </table>
+                </div>
+
+                <div>
+                    <span t-esc="doc.fecha.strftime('%d/%m/%Y %H:%M:%S')" />
+                </div>
+            </t>
+        </t>
+
+    </template>
+</odoo>

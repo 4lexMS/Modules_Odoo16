@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_arqueo_cajas">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <div class="page">
+
+                    <style>
+                        table.custom-table1 {
+                        width: 50%;
+                        text-align: left;
+                        border-bottom: 2px solid;
+                        font-size: 12px;
+                        font-family: Arial;
+                        }
+                        table.custom-table-totales {
+                        width: 35%;
+                        text-align: right;
+                        font-size: 13px;
+                        font-weight: bold;
+                        font-family: Calibri;
+                        margin-left: 140px;
+                        border-radius: 10px;
+                        border: 2px solid;
+                        padding: 10px;
+                        }
+
+                        table.custom-table-billetes {
+                        width: 35%;
+                        text-align: right;
+                        font-size: 12px;
+                        font-weight: bold;
+                        font-family: Calibri;
+                        margin-left: 350px;
+                        margin-top: -75px;
+                        padding: 10px;
+                        border-collapse: collapse;
+                        border: none;
+                        }
+
+                        table.custom-table {
+                        width: 95%;
+                        font-size: 13px;
+                        margin-top: 20px;
+                        margin-left: 15px;
+                        border-radius: 10px;
+                        border: 2px solid;
+                        padding: 10px;
+                        }
+
+                        p.parrafo_title1{
+                        font-size: 14px;
+                        font-family: Calibri;
+                        text-transform: uppercase;
+                        padding-left: 180px;
+                        padding-top: 40px;"
+                        }
+
+                        table.custom-table-footer {
+                            width: 100%;
+                            text-align: left;
+                            border-bottom: 2px solid;
+                            font-size: 13px;
+                            font-family: Arial;
+                            }
+
+                    </style>
+                    <p class="parrafo_title1">
+                        <span style="font-weight: bold;"
+                            t-esc="doc.env.company.name" />
+                        <br></br>
+
+                        <span t-esc="doc.caja.name" />
+                    </p>
+                    <h4
+                        style="padding-top: 10px;
+                        text-align: center;
+                        font-size: 18px;">
+                        Consolidacion de Cajas</h4>
+                    <table class="custom-table">
+                        <tr>
+                            <td style="font-weight: bold;">Caja:</td>
+                            <td t-esc="doc.caja.name" />
+                            <td></td>
+                            <td style="font-weight: bold;">Sesion Caja:</td>
+                            <td t-esc="doc.sesion_caja.name" />
+                        </tr>
+                        <tr></tr>
+                        <tr></tr>
+                        <tr>
+                            <td style="font-weight: bold;">Usuario:</td>
+                            <td t-esc="doc.usuario" />
+                            <td></td>
+                            <td style="font-weight: bold;">Fecha:</td>
+                            <td t-esc="doc.fecha.strftime('%d/%m/%Y %H:%M:%S')" />
+                        </tr>
+                    </table>
+                    <p></p>
+
+                    <table class="custom-table1">
+                        <thead>
+                            <tr>
+                                <th>Denominacion</th>
+                                <th>Cantidad</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="doc.denominaciones" t-as="denom">
+                                <td t-esc="denom.nombre" />
+                                <td t-esc="denom.cantidad" />
+                                <td t-esc="denom.total" />
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br></br>
+                    <table class="custom-table-totales">
+                        <tr>
+                            <td>Total Caja:</td>
+                            <td t-esc="doc.total_caja" />
+                        </tr>
+                        <tr>
+                            <td>Total Arqueo:</td>
+                            <td t-esc="doc.total_arqueo" />
+                        </tr>
+                        <tr>
+                            <td>Diferencia:</td>
+                            <td t-esc="doc.diferencia" />
+                        </tr>
+                    </table>
+                    <table class="custom-table-billetes">
+                        <tr>
+                            <td>MONEDAS: $</td>
+                            <td t-esc="doc.monedas" />
+                        </tr>
+                        <tr>
+                            <td> BILLETES: $</td>
+                            <td t-esc="doc.billetes" />
+                        </tr>
+                        <tr>
+
+                            <td>FONDO CAJA: $</td>
+                            <td t-esc="doc.fondo_caja" />
+                        </tr>
+                        <tr>
+                            <td>DEP. SUG.: $ </td>
+                            <td t-esc="doc.dep_sug" />
+                        </tr>
+                    </table>
+
+                    <table class="custom-table-footer" >
+                        <tr>
+                            <td>Observacion: </td>
+                            <td t-esc="doc.observacion" />
+                        </tr>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>
+    
