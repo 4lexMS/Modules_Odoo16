@@ -267,8 +267,8 @@ class AccountMoveReportWizard(models.TransientModel):
                 worksheet.merge_range(row, 13, row, 22, invoice.get('documento', ""), text_products)
                 worksheet.merge_range(row, 23, row, 29, invoice.get('referencia', ""), text_products)
                 worksheet.merge_range(row, 30, row, 32, invoice.get('valor_total', 0), text_price)
-                sumaIGC += invoice.get('valor_total', 0)
                 row += 1
+                sumaIGC += invoice.get('valor_total', 0)
 
         #si son mas de 50 productos
         if len(data) > (max_data_row - 3):
@@ -418,8 +418,8 @@ class AccountMoveReportWizard(models.TransientModel):
                     worksheet.merge_range(row, 23, row, 29, invoice.get('referencia', ""), text_products)
                     worksheet.merge_range(row, 30, row, 32, invoice.get('total_res', 0), text_price)
                     row += 1
-                sumaEGBC += invoice.get('total_res', 0)
-                sumaTEG += invoice.get('total_res', 0)
+                    sumaEGBC += invoice.get('total_res', 0)
+                    sumaTEG += invoice.get('total_res', 0)
 
             worksheet.merge_range(row, 26, row, 29,  'Total', title_price)
             worksheet.merge_range(row, 30, row, 32,  sumaEGBC,  text_price)
@@ -449,15 +449,18 @@ class AccountMoveReportWizard(models.TransientModel):
             row = row+3
             sumaOEG = 0
 
-            for product in products:
-                worksheet.set_row(row, 12)  # Establece la altura de la fila en 20 puntos
-                worksheet.merge_range(row, 3, row, 12, product.list_price, text_products)
-                worksheet.merge_range(row, 13, row, 22, product.name, text_products)
-                worksheet.merge_range(row, 23, row, 29, product.name, text_products)
-                worksheet.merge_range(row, 30, row, 32, product.list_price, text_price)
-                row += 1
-                sumaOEG += product.list_price
-                sumaTEG += product.list_price
+            for invoice in data:
+                worksheet.set_row(row, 20)
+                if invoice.get('valor_total') < 0:
+                    worksheet.write(row, 2, invoice.get('ingreso_doc', ""), text_products)
+                    worksheet.merge_range(row, 3, row, 12, invoice.get('tipo_doc', ""), text_products)
+                    worksheet.merge_range(row, 13, row, 22, invoice.get('documento', ""), text_products)
+                    worksheet.merge_range(row, 23, row, 29, invoice.get('referencia', ""), text_products)
+                    worksheet.merge_range(row, 30, row, 32, invoice.get('total_res', 0), text_price)
+                    row += 1
+                    sumaOEG += invoice.get('total_res', 0)
+                    sumaTEG += invoice.get('total_res', 0)
+
             worksheet.merge_range(row, 26, row, 29,  'Total', title_price)
             worksheet.merge_range(row, 30, row, 32,  sumaOEG,  text_price)
             worksheet.merge_range(row+1, 23, row+1, 29,  'TOTAL EGC', title_price)
@@ -475,17 +478,17 @@ class AccountMoveReportWizard(models.TransientModel):
         worksheet.merge_range(row+7, 1, row+7, 11, 'Facturas Contado', text_products)
         worksheet.merge_range(row+7, 12, row+7, 21, sumaIGC, text_price)
         worksheet.merge_range(row+8, 1, row+8, 11, 'Facturas Crédito', text_products)
-        worksheet.merge_range(row+8, 12, row+8, 21, product.list_price, text_price)
-        sumaIGC2 = sumaIGC + product.list_price
+        worksheet.merge_range(row+8, 12, row+8, 21, invoice.get('total_res', 0), text_price)
+        sumaIGC2 = sumaIGC + invoice.get('total_res', 0)
         worksheet.merge_range(row+9, 1, row+9, 11, 'Cobros a Clientes', text_products)
-        worksheet.merge_range(row+9, 12, row+9, 21, product.list_price, text_price)
-        sumaIGC2 += product.list_price
+        worksheet.merge_range(row+9, 12, row+9, 21, invoice.get('total_res', 0), text_price)
+        sumaIGC2 += invoice.get('total_res', 0)
         worksheet.merge_range(row+10, 1, row+10, 11, 'Ingresos Banco', text_products)
-        worksheet.merge_range(row+10, 12, row+10, 21, product.list_price, text_price)
-        sumaIGC2 += product.list_price
+        worksheet.merge_range(row+10, 12, row+10, 21, invoice.get('total_res', 0), text_price)
+        sumaIGC2 += invoice.get('total_res', 0)
         worksheet.merge_range(row+11, 1, row+11, 11, 'Otros Ingresos', text_products)
-        worksheet.merge_range(row+11, 12, row+11, 21, product.list_price, text_price)
-        sumaIGC2 += product.list_price
+        worksheet.merge_range(row+11, 12, row+11, 21, invoice.get('total_res', 0), text_price)
+        sumaIGC2 += invoice.get('total_res', 0)
         worksheet.merge_range(row+12, 1, row+12, 11, 'Total ', title_price)
         worksheet.merge_range(row+12, 12, row+12, 21, sumaIGC2, text_price2)
 
@@ -516,17 +519,17 @@ class AccountMoveReportWizard(models.TransientModel):
         sumaToIn = 0
         sumaToEg = 0
 
-        for product in products:
-            worksheet.set_row(row, 12)  # Establece la altura de la fila en 20 puntos
-            worksheet.merge_range(row, 2, row, 4, product.name, text_products)
-            worksheet.merge_range(row, 7, row, 15, product.standard_price, text_price)
-            worksheet.merge_range(row, 17, row, 23, product.list_price, text_price)
-            worksheet.merge_range(row, 25, row, 27, product.list_price, text_price)
+        for invoice in data:
+            worksheet.set_row(row, 12)
+            worksheet.merge_range(row, 2, row, 4, invoice.get('tipo_doc', ""), text_products)
+            worksheet.merge_range(row, 7, row, 15, invoice.get('valor_total'), text_price)
+            worksheet.merge_range(row, 17, row, 23, invoice.get('total_res', 0), text_price)
+            worksheet.merge_range(row, 25, row, 27, invoice.get('total_res', 0), text_price)
             #valor = apertura + ingresos - egresos
-            worksheet.merge_range(row, 29, row, 31, ((product.standard_price + product.list_price) - product.list_price), text_price)
+            worksheet.merge_range(row, 29, row, 31, invoice.get('valor_total', 0), text_products)
             row += 1
-            sumaToIn += product.list_price
-            sumaToEg += product.list_price
+            sumaToIn += invoice.get('total_res', 0) or 0
+            sumaToEg += invoice.get('total_res', 0) or 0
 
         worksheet.merge_range(row, 7, row, 15, 'TOTALES', text_price2)
         #VALOR INGRESO FORMAS DE PAGO
@@ -542,13 +545,13 @@ class AccountMoveReportWizard(models.TransientModel):
         row = row + 4
         total_ef = 0
 
-        for product in products:
+        for invoice in data:
             worksheet.set_row(row, 12)  # Establece la altura de la fila en 20 puntos
-            worksheet.merge_range(row, 2, row, 4, product.name, text_products)
+            worksheet.merge_range(row, 2, row, 4, invoice.get('tipo_doc', ""), text_products)
             #VALOR FORMAS DE PAGO
-            worksheet.merge_range(row, 7, row, 15, product.list_price, text_price)
+            worksheet.merge_range(row, 7, row, 15, invoice.get('total_res', 0), text_price)
             row += 1
-            total_ef += product.list_price
+            total_ef += invoice.get('total_res', 0) or 0
         worksheet.merge_range(row, 2, row, 3, 'Totales', text_price2)
         worksheet.merge_range(row, 7, row, 15, total_ef, text_price2)
 
