@@ -147,7 +147,7 @@
                         <tr></tr>
                         <tr>
                             <td style="font-weight: bold;">Caja:</td>
-                            <td t-esc="doc.usuario" />
+                            <td t-esc="doc.caja.name" />
                             <td></td>
                             <td style="font-weight: bold;">Moneda:</td>
                             <td t-esc="doc.fecha.strftime('%d/%m/%Y %H:%M:%S')" />
@@ -181,11 +181,15 @@
                     </table>
 
                     <table class="custom-table">
-                        <tr>
-                            <td t-esc="doc.caja.name" />
-                            <td style="text-align: center;" t-esc="doc.sesion_caja.name" />
+                        <tr t-foreach="doc.metodo_pago_ids" t-as="metodo">
+                            <td t-esc="metodo.name"></td>
+                            <t t-foreach="doc.valor_pago" t-as="valor">
+                                <t t-if="valor.payment_method_id == metodo">
+                                    <td t-esc="valor.amount"></td>    
+                                </t>
+                                
+                            </t>
                         </tr>
-
                     </table>
                     <table class="custom-table">
                         <tr

@@ -8,13 +8,19 @@
     'license': 'LGPL-3',
     'depends': ['base', 'point_of_sale', 'stock', ],
     'data': [
-        'wizard/arqueo_cajas.xml',
-        'wizard/egreso_caja.xml',
+        'wizard2/arqueo_cajas.xml',
+        'wizard2/egreso_caja.xml',
         'views/action_report.xml',
+        'views/inherit_pos_bill.xml',
         'report/reporte_arqueo.xml',
         'report/reporte_egreso.xml',
         'security/ir.model.access.csv',
     ],
+    'assets': {
+        'web.report_assets_common': [
+            'point_of_sale_reports/static/src/**/*',
+        ],
+    },
     'installable': True,
     'application': True,
 }

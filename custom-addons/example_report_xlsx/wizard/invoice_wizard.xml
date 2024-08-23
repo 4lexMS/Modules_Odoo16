@@ -2,8 +2,8 @@
 <odoo>
     <data>
         <!-- Vista del Wizard -->
-        <record id="view_wizard_point_sale" model="ir.ui.view">
-            <field name="name">wizard.point_sale.form</field>
+        <record id="view_wizard_account.move.report" model="ir.ui.view">
+            <field name="name">wizard.account.move.report.wizard.form</field>
             <field name="model">wizard.point_sale</field>
             <field name="arch" type="xml">
                 <form>

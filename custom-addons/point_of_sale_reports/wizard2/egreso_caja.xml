@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <!-- Vista del Wizard -->
-        <record id="view_wizard_point_sale" model="ir.ui.view">
-            <field name="name">wizard.point_sale.form</field>
+        <record id="wizard_egreso_caja" model="ir.ui.view">
+            <field name="name">wizard.point_sale</field>
             <field name="model">wizard.point_sale</field>
             <field name="arch" type="xml">
                 <form>
                     <group>
                         <group>
-                            <field name="fecha"/>
                             <field name="usuario" readonly="1"/>
+                            <field name="fecha_apertura"/>
                         </group>
                         <group>
                             <field name="caja"/>
@@ -18,27 +17,25 @@
                         </group>
                     </group>
                     <footer>
-                        <button string="Cancelar" class="btn-secondary" special="cancel"/>
-                        <button string="Generar Reporte" type="object" name="generate_report_arqueo" class="btn-primary"/>
+                        <button string="Discard" class="btn-secondary" special="cancel"/>
+                        <button string="Generar Reporte" type="object" name="generate_report_egreso" class="btn-primary"/>
                     </footer>
                 </form>
             </field>
         </record>
 
-        <!-- Acción para abrir el wizard -->
-        <record id="action_wizard_point_sale" model="ir.actions.act_window">
-            <field name="name">Reporte Arqueo de Cajas</field>
+        <record id="action_menu_egreso_caja" model="ir.actions.act_window">
+            <field name="name">Reporte Egreso o Ingreso de Caja</field>
             <field name="res_model">wizard.point_sale</field>
             <field name="view_mode">form</field>
-            <field name="view_id" ref="view_wizard_point_sale"/>
+            <field name="view_id" ref="wizard_egreso_caja"/>
             <field name="target">new</field>
         </record>
 
-        <!-- Menú para acceder al wizard -->
         <menuitem
-            id="menu_wizard_point_sale"
-            name="Arqueo de Caja"
+            id="menu_egreso_caja"
+            name="Egreso de Caja"
             parent="point_of_sale.menu_point_rep"
-            action="action_wizard_point_sale"/>
+            action="action_menu_egreso_caja"/>
     </data>
 </odoo>

@@ -1,0 +1,48 @@
+SELECT 
+    po.pos_reference AS ingreso_doc,
+    po.name AS tipo_doc,
+    am.name AS documento,
+    am.invoice_partner_display_name AS referencia,
+    am.amount_total AS valor_total,
+	acj.type AS tipo_pago,
+	ps.name AS sesion
+	
+FROM 
+    account_move am
+INNER JOIN 
+    pos_order po ON po.account_move = am.id
+INNER JOIN
+	pos_session ps ON po.session_id = ps.id
+INNER JOIN 
+    pos_payment pp ON pp.pos_order_id = po.id
+INNER JOIN
+    pos_payment_method pm ON pm.id = pp.payment_method_id
+INNER JOIN
+	account_journal acj ON acj.id = pm.journal_id
+WHERE 
+    am.move_type = 'out_invoice';
+    
+    ---buscar las salidas en efectivo de la sesion seleccionada 
+    
+SELECT 
+    acj.type AS tipo_pago,
+    ps.name AS sesion,
+    cbk.payment_ref AS referencia,
+    cbk.amount AS valor_egreso
+	
+FROM 
+    account_move am
+INNER JOIN 
+    pos_order po ON po.account_move = am.id
+INNER JOIN
+	pos_session ps ON po.session_id = ps.id
+INNER JOIN
+	account_bank_statement_line cbk ON ps.id = cbk.pos_session_id
+INNER JOIN 
+    pos_payment pp ON pp.pos_order_id = po.id
+INNER JOIN
+    pos_payment_method pm ON pm.id = pp.payment_method_id
+INNER JOIN
+	account_journal acj ON acj.id = pm.journal_id
+WHERE 
+    cbk.amount <0;

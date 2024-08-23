@@ -1,0 +1,46 @@
+SELECT ---buscar las facturas al contado
+    po.pos_reference AS ingreso_doc,
+    po.name AS tipo_doc,
+    am.name AS documento,
+    am.invoice_partner_display_name AS referencia,
+    am.amount_total AS valor_total,
+	ps.name AS sesion
+	
+FROM 
+    account_move am
+INNER JOIN 
+    pos_order po ON po.account_move = am.id
+INNER JOIN
+	pos_session ps ON po.session_id = ps.id
+INNER JOIN 
+    pos_payment pp ON pp.pos_order_id = po.id
+INNER JOIN
+    pos_payment_method pm ON pm.id = pp.payment_method_id
+INNER JOIN
+	account_journal acj ON acj.id = pm.journal_id
+WHERE 
+    am.move_type = 'out_invoice'
+
+UNION ALL
+    ---buscar las salidas en efectivo de la sesion seleccionada 
+    
+SELECT 
+    am.name AS ingreso_doc,
+	NULL AS tipo_doc,
+	NULL AS documento,
+	cbk.payment_ref AS referencia,
+	cbk.amount AS valor_total,
+    ps.name AS sesion
+	
+FROM 
+    account_move am
+INNER JOIN
+	pos_session ps ON am.id = ps.move_id
+INNER JOIN
+    account_bank_statement_line cbk ON ps.id = cbk.pos_session_id
+INNER JOIN
+    account_journal acj ON acj.id = am.journal_id
+WHERE 
+    cbk.amount < 0
+ORDER BY 
+    sesion, tipo_doc;

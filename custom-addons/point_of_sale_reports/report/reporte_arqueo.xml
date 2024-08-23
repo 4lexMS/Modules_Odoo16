@@ -57,14 +57,16 @@
                         }
 
                         table.custom-table-footer {
-                            width: 100%;
-                            text-align: left;
-                            border-bottom: 2px solid;
-                            font-size: 13px;
-                            font-family: Arial;
-                            }
+                        width: 100%;
+                        text-align: left;
+                        border-bottom: 2px solid;
+                        font-size: 13px;
+                        font-family: Arial;
+                        }
 
                     </style>
+
+
                     <p class="parrafo_title1">
                         <span style="font-weight: bold;"
                             t-esc="doc.env.company.name" />
@@ -92,7 +94,7 @@
                             <td t-esc="doc.usuario" />
                             <td></td>
                             <td style="font-weight: bold;">Fecha:</td>
-                            <td t-esc="doc.fecha.strftime('%d/%m/%Y %H:%M:%S')" />
+                            <td t-esc="doc.fecha_apertura.strftime('%d/%m/%Y %H:%M:%S')" />
                         </tr>
                     </table>
                     <p></p>
@@ -106,11 +108,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr t-foreach="doc.denominaciones" t-as="denom">
-                                <td t-esc="denom.nombre" />
-                                <td t-esc="denom.cantidad" />
-                                <td t-esc="denom.total" />
-                            </tr>
+                            <th>
+                                <td t-esc="doc.denominaciones.name">Moneda#</td>
+                            </th>
                         </tbody>
                     </table>
                     <br></br>
@@ -148,7 +148,7 @@
                         </tr>
                     </table>
 
-                    <table class="custom-table-footer" >
+                    <table class="custom-table-footer">
                         <tr>
                             <td>Observacion: </td>
                             <td t-esc="doc.observacion" />

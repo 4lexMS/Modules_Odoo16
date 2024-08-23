@@ -9,12 +9,12 @@
                 <form>
                     <group>
                         <group>
-                            <field name="fecha"/>
-                            <field name="usuario" readonly="1"/>
+                            <field name="fecha_apertura"/>
+                            <field name="usuario" widget='many2one_tags'/>
                         </group>
                         <group>
-                            <field name="caja"/>
                             <field name="sesion_caja"/>
+                            <field name="caja"/>
                         </group>
                     </group>
                     <footer>
